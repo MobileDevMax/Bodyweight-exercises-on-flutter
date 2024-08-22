@@ -1,0 +1,81 @@
+import 'package:flutter/material.dart';
+import 'dart:math';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Bodyweight exercises',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: const ExerciseRecommendationPage(),
+    );
+  }
+}
+
+class ExerciseRecommendationPage extends StatefulWidget {
+  const ExerciseRecommendationPage({Key? key}) : super(key: key);
+
+  @override
+  _ExerciseRecommendationPageState createState() => _ExerciseRecommendationPageState();
+}
+
+class _ExerciseRecommendationPageState extends State<ExerciseRecommendationPage> {
+  final List<String> exercises = [
+    'Push-ups',
+    'Reverse push-ups',
+    'Squats',
+    'Plank',
+    'Lunges',
+    'Wall push-ups',
+    'Crunches',
+    'Calf raises',
+    'Superman',
+    'Burpee'
+  ];
+
+  String? currentExercise;
+
+  void recommendExercise() {
+    setState(() {
+      final randomIndex = Random().nextInt(exercises.length);
+      currentExercise = exercises[randomIndex];
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Bodyweight exercises'),
+      ),
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                currentExercise ?? 'Click the button to recommend an exercise!',
+                style: const TextStyle(fontSize: 24),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: recommendExercise,
+                child: const Text('New exercise'),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
